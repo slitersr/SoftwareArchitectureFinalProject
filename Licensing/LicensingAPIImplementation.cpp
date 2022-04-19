@@ -1,9 +1,10 @@
-#include "LicensingAPIImplementation.h"
-
 #include <iostream>
 
+#include "LicensingAPIImplementation.h"
+#include "LicenseLoaderImplementation.h"
+
 void LicensingAPIImplementation::initialize() {
-	std::cout << "[stub] API initialize" << std::endl;
+	loader->loadLicenses();
 }
 
 boost::optional<LicenseReserveFailure> LicensingAPIImplementation::reserve(std::string context, std::string entitlement) {

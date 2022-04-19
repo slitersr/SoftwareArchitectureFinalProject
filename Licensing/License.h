@@ -7,12 +7,21 @@
 
 class dll License {
 private:
+	std::string raw;
 	std::string id;
 	std::vector<std::string> entitlements;
 	std::vector<std::string> contexts;
 	std::string signature;
 
 public:
+	std::string getRaw() {
+		return raw;
+	}
+
+	void setRaw(std::string raw) {
+		this->raw = raw;
+	}
+
 	std::string getId() {
 		return id;
 	}

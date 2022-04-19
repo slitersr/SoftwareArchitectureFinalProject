@@ -7,4 +7,5 @@ class dll LicenseLoaderImplementation : public LicenseLoader {
 public:
 	virtual ~LicenseLoaderImplementation() {};
 	virtual std::vector<License> loadLicenses();
+	virtual bool validateSignature(License license);
 };

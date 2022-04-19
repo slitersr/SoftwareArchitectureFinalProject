@@ -11,6 +11,8 @@ private:
 	LicenseLoader* loader;
 
 public:
+	LicensingAPIImplementation(LicenseClient* client, LicenseLoader* loader) : client(client), loader(loader) {}
+
 	virtual ~LicensingAPIImplementation() {
 		delete client;
 		delete loader;

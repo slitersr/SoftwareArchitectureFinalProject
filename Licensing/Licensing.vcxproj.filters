@@ -62,6 +62,9 @@
     <ClInclude Include="LicenseLoaderImplementation.h">
       <Filter>Header Files\implementation</Filter>
     </ClInclude>
+    <ClInclude Include="Licensing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
