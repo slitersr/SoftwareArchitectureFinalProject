@@ -7,8 +7,11 @@
 
 class Licensing {
 public:
+	/**
+	* Obtain the LicensingAPI singleton.
+	*/
 	static std::shared_ptr<LicensingAPI> api() {
-		std::shared_ptr<LicensingAPI> pointer{
+		static std::shared_ptr<LicensingAPI> pointer{
 			new LicensingAPIImplementation(new LicenseClientImplementation(), new LicenseLoaderImplementation())
 		};
 		return pointer;

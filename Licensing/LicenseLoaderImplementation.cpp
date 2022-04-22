@@ -3,18 +3,66 @@
 #include <iostream>
 #include <filesystem>
 #include <string>
+#include <fstream>
 
-//#include "boost/algorithm/hex.hpp"
 #include "openssl/hmac.h"
 #include "openssl/evp.h"
 #include "LicenseLoaderImplementation.h"
 
 std::vector<License> LicenseLoaderImplementation::loadLicenses() {
-	for (const auto& path : std::filesystem::directory_iterator("./")) {
-		std::cout << path << std::endl;
+	auto result = std::vector<License>();
+	for (const auto& file : std::filesystem::directory_iterator("../licenses")) {
+		try {
+			if (!file.is_regular_file()) continue;
+			if (!file.path().string().ends_with(".dat")) continue;
+			std::ifstream data_stream(file.path());
+			std::stringstream data_buffer;
+			data_buffer << data_stream.rdbuf();
+			std::ifstream signature_stream(file.path().string().append(".signature"));
+			std::stringstream signature_buffer;
+			signature_buffer << signature_stream.rdbuf();
+			License license;
+			license.setRaw(data_buffer.str());
+			license.setSignature(signature_buffer.str());
+			std::string line;
+			std::getline(data_buffer, line);
+			license.setId(line);
+			std::getline(data_buffer, line);
+			std::stringstream context_stream(line);
+			std::string context;
+			auto contexts = std::vector<std::string>();
+			while (std::getline(context_stream, context, ',')) {
+				contexts.push_back(context);
+			}
+			std::getline(data_buffer, line);
+			std::stringstream entitlement_stream(line);
+			std::string entitlement;
+			license.setContexts(contexts);
+			auto entitlements = std::vector<std::string>();
+			while (std::getline(entitlement_stream, entitlement, ',')) {
+				entitlements.push_back(entitlement);
+			}
+			license.setEntitlements(entitlements);
+
+			if (validateSignature(license)) {
+				license.print();
+				result.push_back(license);
+			}
+		}
+		catch (const std::exception&) {
+			std::cout << "Skipping invalid or corrupt license file: " << file << std::endl;
+			std::cout << "Please obtain a new copy of this license and place it in the 'licenses' directory" << std::endl;
+		}
 	}
-	std::cout << "[stub] Loading licenses from file" << std::endl;
-	return std::vector<License>();
+
+	int entitlements = 0, contexts = 0;
+	for (License& license : result) {
+		entitlements += license.getEntitlements().size();
+		contexts += license.getContexts().size();
+	}
+	std::cout << "Loaded " << result.size() << " licenses usable in " << contexts << " contexts containing " << entitlements << " total entitlements." << std::endl;
+
+	return result;
 }
 
 

@@ -30,6 +30,12 @@
     <ClCompile Include="LicenseLoaderTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StubLicenseLoader.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MockLicenseClient.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -148,6 +148,8 @@
     <ClCompile Include="LicenseLoaderTest.cpp" />
     <ClCompile Include="LicensingAPITest.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MockLicenseClient.h" />
+    <ClCompile Include="StubLicenseLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

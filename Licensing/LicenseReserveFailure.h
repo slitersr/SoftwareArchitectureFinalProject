@@ -6,21 +6,12 @@
 
 class dll LicenseReserveFailure {
 private:
-	License license;
 	std::string context;
 	std::string entitlement;
 	bool allowContinue;
 	std::string message;
 public:
-	License getLicense() {
-		return license;
-	}
-
-	void setLicense(License license) {
-		this->license = license;
-	}
-
-	std::string getContext() {
+	const std::string getContext() const {
 		return context;
 	}
 
@@ -28,7 +19,7 @@ public:
 		this->context = context;
 	}
 
-	std::string getEntitlement() {
+	const std::string getEntitlement() const {
 		return entitlement;
 	}
 
@@ -36,7 +27,7 @@ public:
 		this->entitlement = entitlement;
 	}
 
-	bool getAllowContinue() {
+	const bool getAllowContinue() const {
 		return allowContinue;
 	}
 
@@ -44,7 +35,7 @@ public:
 		this->allowContinue = allowContinue;
 	}
 
-	std::string getMessage() {
+	const std::string getMessage() const {
 		return message;
 	}
 

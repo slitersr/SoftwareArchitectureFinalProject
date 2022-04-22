@@ -60,6 +60,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>..\Licensing</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -77,6 +78,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;UILIBRARY_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..\Licensing</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -114,6 +116,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Journaling\Journaling.vcxproj">
       <Project>{3ed245ab-f27b-4166-8e34-f5f0f355bf0a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Licensing\Licensing.vcxproj">
+      <Project>{f224b8ea-5e42-403c-bc52-bc619fdd861c}</Project>
     </ProjectReference>
     <ProjectReference Include="..\PartOpsUI\PartOpsUI.vcxproj">
       <Project>{6897419d-b643-48a6-8f1a-f03a94004946}</Project>

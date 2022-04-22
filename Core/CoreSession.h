@@ -3,6 +3,7 @@
 #include "ISubject.h"
 #include <list>
 #include <iostream>
+#include "../Licensing/LicensingAPI.h"
 
 class Observer;
 
@@ -34,6 +35,7 @@ class CORE_API CoreSession : ISubject
         void ClearObservers();
 
         void SetupDefaultObservers();
+        std::shared_ptr<LicensingAPI> Licensing();
 
 private:
     std::list<IObserver*> m_listObserver;

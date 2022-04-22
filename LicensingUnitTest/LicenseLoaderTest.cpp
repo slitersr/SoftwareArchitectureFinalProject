@@ -12,6 +12,13 @@ LicenseLoaderImplementation create() {
 	return LicenseLoaderImplementation();
 }
 
+TEST(LicenseLoaderTest, TestLoadLicenses) {
+	auto loader = create();
+
+	auto licenses = loader.loadLicenses();
+	EXPECT_TRUE(licenses.size() > 0);
+}
+
 TEST(LicenseLoaderTest, TestValidateCorrectSignature) {
 	auto loader = create();
 

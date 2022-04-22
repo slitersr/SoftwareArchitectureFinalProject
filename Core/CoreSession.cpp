@@ -1,7 +1,7 @@
 #include "CoreSession.h"
 #include "Observer.h"
 #include "..\AppPartOps\DelMeBadPattern.h"
-
+#include "Licensing.h"
 
 CoreSession::CoreSession() : m_observerForSavePart(nullptr), m_observerForClosePart(nullptr), m_observerForOpenPart(nullptr)
 {
@@ -135,4 +135,8 @@ void CoreSession::HowManyObserver() {
 void CoreSession::ClearObservers()
 {
 
+}
+
+std::shared_ptr<LicensingAPI> CoreSession::Licensing() {
+    return Licensing::api();
 }

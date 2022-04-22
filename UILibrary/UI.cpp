@@ -19,6 +19,8 @@ UI::UI()
 
 void UI::Init()
 {
+	CoreSession::GetInstance().Licensing()->initialize();
+
 	CoreSession::GetInstance().SetupDefaultObservers();
 
 	CoreSession::GetInstance().CreateMessage("Hello World! :D");
@@ -47,6 +49,14 @@ void UI::Init()
 
 void UI::StartGUILoop()
 {
+	auto result = CoreSession::GetInstance().Licensing()->reserve("ui", "basic");
+	if (result.is_initialized()) {
+		CoreSession::GetInstance().CreateMessage("Unable to reserve basic UI license.");
+		CoreSession::GetInstance().CreateMessage(result.get().getMessage());
+		CoreSession::GetInstance().CreateMessage("Not starting UI.");
+		return;
+	}
+
 	int WorkFlowToRun = 1;
 
 	if (WorkFlowToRun == 1)
@@ -78,9 +88,12 @@ void UI::StartGUILoop()
 
 void UI::ShutDownGUILoop()
 {
+	CoreSession::GetInstance().Licensing()->unreserve("ui", "basic");
+
 	observer4->RemoveMeFromTheList();
 	observer5->RemoveMeFromTheList();
 
+	CoreSession::GetInstance().Licensing()->shutdown();
 }
 
 void UI::PerformPartsOpsThatNeedsToLoadDemandLoadedLibrary()
@@ -122,8 +135,7 @@ void UI::PerformSampleJournalingPartsOps()
 
 	//Setup Journaling File
 	SetJournalingLangauge(JournalingLanguage::CPP);
-	StartJournaling(BasePath() +"\\JournaledCPPFileProject\\SampleJournal.txt");
-
+	StartJournaling(BasePath() + "\\JournaledCPPFileProject\\SampleJournal.txt");
 
 	Application::PartFile* partFile = MakePartUI("d:\\workdir\\someDir\\SomeName.part");
 	AddWidgetFeatureToPartUI(partFile, true, 10);
@@ -147,12 +159,15 @@ void UI::PerformSampleUsingBuilder()
 	SetJournalingLangauge(JournalingLanguage::CPP);
 	StartJournaling(BasePath() + "\\JournaledCPPFileProject\\SampleJournal.txt");
 
+	// Randomly inserted check. Terminate the program if the right entitlements aren't reserved.
+	// Prevents automation code from using our internal code for free.
+	CoreSession::GetInstance().Licensing()->check("part_operations");
 
 	Application::PartFile* partFile = MakePartUI("d:\\workdir\\someDir\\SomeName.part");
-	
+
 	Application::BlockBuilder* blockBuilder = CreateBlockBuilderUI(partFile, nullptr);
 	Journaling_BlockBuilder_SetType(blockBuilder, JournalBlockBuilderTypes::JournalTypesDiagonalPoints);
-	
+
 	SavePartUI(partFile);
 
 	//End Journaling
@@ -165,7 +180,7 @@ void UI::PerformSampleUsingBuilder()
 
 void UI::PerformJavaAutomationWorkflow()
 {
-// To resolve build errors and you don't want to setup the java portion just chagne the #ifdef value to be zero
+	// To resolve build errors and you don't want to setup the java portion just chagne the #ifdef value to be zero
 #if 1
 	CreateJVM();
 
